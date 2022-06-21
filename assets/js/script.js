@@ -1,7 +1,8 @@
+var songListEl = document.querySelector("#songs")
+
 var artistInfo = {};
 var queryString = document.location.search;
 var artistName = queryString.split("=")[1].trim();
-
 
 // private methods
 var getToken = async () => {
@@ -99,10 +100,10 @@ var getArtistData = async (artist) => {
     var songList = await getTopSongs(myToken, artistId);
     var albums = await getLatestAlbums(myToken, artistId);
     var photograph = await getArtistPhoto(myToken, artistId);
-    getOfficialName(token, artistId);
     artistInfo.songList = songList;
     artistInfo.albums = albums;
     artistInfo.photo = photograph;
+    artistInfo.name = 
     console.log(artistInfo);
 }
 
