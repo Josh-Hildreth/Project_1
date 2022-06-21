@@ -7,8 +7,10 @@ let url =
  fetch(url).then(response => response.json()).then(data => {
     console.log(data);
 })
+
+// beccas stuff below
 var artistInfo = {};
-   
+
 var getToken = async () => {
 
     var result = await fetch('https://accounts.spotify.com/api/token', {
