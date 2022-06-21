@@ -1,6 +1,8 @@
 var songListEl = document.querySelector("#songs")
+var artistNameEl = document.querySelector("#artist-name")
+var artistPictureEl = document.querySelector("#artist-picture")
+var artistAlbumsEl = document.querySelector("#albums")
 
-var artistInfo = {};
 var queryString = document.location.search;
 var artistName = queryString.split("=")[1].trim();
 
@@ -32,17 +34,17 @@ var getArtistId = async (token, artist) => {
         return artistId;
 }
 
-var getOfficialName = async (token, artistId) => {
-    apiURL = `https://api.spotify.com/v1/artists/` + artistId;
-    var result = await fetch(apiURL, {
-    method: 'GET',
-    headers: { 'Authorization' : 'Bearer ' + token}
-    });
+// var getOfficialName = async (token, artistId) => {
+//     apiURL = `https://api.spotify.com/v1/artists/` + artistId;
+//     var result = await fetch(apiURL, {
+//     method: 'GET',
+//     headers: { 'Authorization' : 'Bearer ' + token}
+//     });
 
-    var data = await result.json();
+//     var data = await result.json();
 
-    return data.name;
-}
+//     return data.name;
+// }
 
 var getTopSongs = async (token, artistId) => {
     apiURL = 'https://api.spotify.com/v1/artists/'+artistId+'/top-tracks?country=US';
@@ -68,14 +70,23 @@ var getLatestAlbums = async (token, artistId) => {
     });
 
     var data = await result.json();
+    console.log(data);
     var albumData = {
         name: [],
         img: []
     };
 
+
+    var j = 0;
+    var currentAlbum = "";
+
     for(var i = 0; i < 3; i++){
-        albumData.name.push(data.items[i].name);
-        albumData.img.push(data.items[i].images[1].url);
+        while (data.items[i+j].name == currentAlbum) {
+            j++;
+        }
+        albumData.name.push(data.items[i+j].name);
+        albumData.img.push(data.items[i+j].images[1].url);
+        currentAlbum = data.items[i+j].name;
     }
     return albumData;
 }
@@ -89,22 +100,55 @@ var getArtistPhoto = async (token, artistId) => {
 
     var data = await result.json();
     
-    return data.images[0].url;
+    return [data.name ,data.images[0].url];
 }
 
 var getArtistData = async (artist) => {
-    artistInfo = {};
+    var artistInfo = {};
     var myToken = await token;
     var artistId = await getArtistId(myToken, artist);
-    var name = await getOfficialName(token, artistId);
     var songList = await getTopSongs(myToken, artistId);
     var albums = await getLatestAlbums(myToken, artistId);
-    var photograph = await getArtistPhoto(myToken, artistId);
+    var nameAndPhoto = await getArtistPhoto(myToken, artistId);
     artistInfo.songList = songList;
     artistInfo.albums = albums;
-    artistInfo.photo = photograph;
-    artistInfo.name = 
-    console.log(artistInfo);
+    artistInfo.photo = nameAndPhoto[1];
+    artistInfo.name = nameAndPhoto[0];
+    return artistInfo;
+}
+
+var addSongList = async (artistData) => {
+    var artistInformation = await artistData;
+    for (let i = 0; i < 10; i++) {
+        var songContainerEl = document.createElement('div');
+        songContainerEl.classList.add("song-title");
+        var songTitleEl = document.createElement("p");
+        songTitleEl.textContent = artistInformation.songList[i];
+        songContainerEl.append(songTitleEl);
+        songListEl.append(songContainerEl);
+    }
+}
+
+var loadArtistInfo = async(artistData) => {
+    var artistInformation = await artistData;
+    var artistHeaderEl = document.createElement('h1');
+    artistHeaderEl.textContent = artistInformation.name;
+    var artistImgEl = document.createElement('img');
+    artistImgEl.setAttribute("src", artistInformation.photo);
+    artistNameEl.append(artistHeaderEl);
+    artistPictureEl.append(artistImgEl);
+}
+
+var loadAlbumInfo = async(artistData) => {
+    var artistInformation = await artistData;
+    
+    for (let i = 0; i < 3; i++) {
+        var albumTitleEl = document.createElement('div');
+        albumTitleEl.textContent = artistInformation.albums.name[i]
+        var albumPhotoEl = document.createElement('img');
+        albumPhotoEl.setAttribute("src", artistInformation.albums.img[i]);
+        artistAlbumsEl.append(albumTitleEl, albumPhotoEl);
+    }
 }
 
 var formSubmitHandler = function(event) {
@@ -119,4 +163,9 @@ var formSubmitHandler = function(event) {
   };
 
 token = getToken();
-getArtistData(artistName);
+var artistData = getArtistData(artistName);
+
+
+addSongList(artistData);
+loadArtistInfo(artistData);
+loadAlbumInfo(artistData);
