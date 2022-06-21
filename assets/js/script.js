@@ -1,19 +1,4 @@
 var artistInfo = {};
-   
-var getToken = async () => {
-
-    var result = await fetch('https://accounts.spotify.com/api/token', {
-        method: 'POST',
-        headers: {
-            'Content-Type' : 'application/x-www-form-urlencoded', 
-            'Authorization' : 'Basic ' + btoa(clientId + ':' + clientSecret)
-        },
-        body: 'grant_type=client_credentials'
-    });
-
-    var data = await result.json();
-    return data.access_token;
-}
 
 var getArtistId = async (artist) => {
         artist = artist.replace(" ","+");
