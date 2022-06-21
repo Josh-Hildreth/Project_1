@@ -1,9 +1,5 @@
 var artistInfo = {};
    
-const clientId = '';
-const clientSecret = '';
-
-// private methods
 var getToken = async () => {
 
     var result = await fetch('https://accounts.spotify.com/api/token', {
@@ -19,12 +15,11 @@ var getToken = async () => {
     return data.access_token;
 }
 
-var getArtistId = async (token, artist) => {
+var getArtistId = async (artist) => {
         artist = artist.replace(" ","+");
         apiURL = `https://api.spotify.com/v1/search?q=` + artist + `&type=artist`;
         var result = await fetch(apiURL, {
-        method: 'GET',
-        headers: { 'Authorization' : 'Bearer ' + token}
+        method: 'GET'
         });
 
         var data = await result.json();
@@ -32,11 +27,10 @@ var getArtistId = async (token, artist) => {
         return artistId;
 }
 
-var getTopSongs = async (token, artistId) => {
+var getTopSongs = async (artistId) => {
 
     var result = await fetch('https://api.spotify.com/v1/artists/'+artistId+'/top-tracks?country=US', {
-        method: 'GET',
-        headers: { 'Authorization' : 'Bearer ' + token}
+        method: 'GET'
     });
 
     var data = await result.json();
@@ -49,11 +43,11 @@ var getTopSongs = async (token, artistId) => {
     return songTitles;
 }
 
-var getLatestAlbums = async (token, artistId) => {
+var getLatestAlbums = async (artistId) => {
+    console.log(artistId);
     apiURL = `	https://api.spotify.com/v1/artists/` + artistId + `/albums`;
     var result = await fetch(apiURL, {
-    method: 'GET',
-    headers: { 'Authorization' : 'Bearer ' + token}
+    method: 'GET'
     });
 
     var data = await result.json();
@@ -69,32 +63,11 @@ var getLatestAlbums = async (token, artistId) => {
     return albumData;
 }
 
-// var getArtistPhoto = async (token, artistId) => {
-//     apiURL = `	https://api.spotify.com/v1/artists/` + artistId + `/albums`;
-//     var result = await fetch(apiURL, {
-//     method: 'GET',
-//     headers: { 'Authorization' : 'Bearer ' + token}
-//     });
-
-//     var data = await result.json();
-//     var albumData = {
-//         name: [],
-//         img: []
-//     };
-
-//     for(var i = 0; i < 3; i++){
-//         albumData.name.push(data.items[i].name);
-//         albumData.img.push(data.items[i].images[1].url);
-//     }
-//     return albumData;
-// }
-
 var getArtistData = async (artist) => {
     artistInfo = {};
-    var token = await getToken();
-    var artistId = await getArtistId(token, artist);
-    var songList = await getTopSongs(token, artistId);
-    var albums = await getLatestAlbums(token, artistId);
+    var artistId = await getArtistId(artist);
+    var songList = await getTopSongs(artistId);
+    var albums = await getLatestAlbums(artistId);
     artistInfo.songList = songList;
     artistInfo.albums = albums;
     console.log(artistInfo);
