@@ -3,6 +3,9 @@ var artistNameEl = document.querySelector("#artist-name")
 var artistPictureEl = document.querySelector("#artist-picture")
 var artistAlbumsEl = document.querySelector("#albums")
 
+const clientId = 'ba4975819dba4a6798c1b583e77851b2';
+const clientSecret = '94323600794449529bcd84b8caf8d7e5';
+
 var queryString = document.location.search;
 var artistName = queryString.split("=")[1].trim();
 
