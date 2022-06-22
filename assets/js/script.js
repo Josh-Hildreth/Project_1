@@ -1,4 +1,3 @@
-
 var queryString = document.location.search;
 var artistName = queryString.split("=")[1].trim();
 
