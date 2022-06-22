@@ -1,3 +1,5 @@
+const clientId = 'ba4975819dba4a6798c1b583e77851b2';
+const clientSecret = '94323600794449529bcd84b8caf8d7e5';
 var songListEl = document.querySelector("#songs")
 var artistNameEl = document.querySelector("#artist-name")
 var artistPictureEl = document.querySelector("#artist-picture")
@@ -23,11 +25,11 @@ var getToken = async () => {
 }
 
 var getArtistId = async (token, artist) => {
-        apiURL = `https://api.spotify.com/v1/search?q=` + artist + `&type=artist`;
-        var result = await fetch(apiURL, {
+    apiURL = `https://api.spotify.com/v1/search?q=` + artist + `&type=artist`;
+    var result = await fetch(apiURL, {
         method: 'GET',
-        headers: { 'Authorization' : 'Bearer ' + token}
-        });
+        headers: { 'Authorization': 'Bearer ' + token }
+    });
 
     var data = await result.json();
     var artistId = data.artists.items[0].id;
@@ -47,10 +49,10 @@ var getArtistId = async (token, artist) => {
 // }
 
 var getTopSongs = async (token, artistId) => {
-    apiURL = 'https://api.spotify.com/v1/artists/'+artistId+'/top-tracks?country=US';
+    apiURL = 'https://api.spotify.com/v1/artists/' + artistId + '/top-tracks?country=US';
     var result = await fetch(apiURL, {
         method: 'GET',
-        headers: { 'Authorization' : 'Bearer ' + token}
+        headers: { 'Authorization': 'Bearer ' + token }
     });
 
     var data = await result.json();
@@ -65,8 +67,8 @@ var getTopSongs = async (token, artistId) => {
 var getLatestAlbums = async (token, artistId) => {
     apiURL = `https://api.spotify.com/v1/artists/` + artistId + `/albums`;
     var result = await fetch(apiURL, {
-    method: 'GET',
-    headers: { 'Authorization' : 'Bearer ' + token}
+        method: 'GET',
+        headers: { 'Authorization': 'Bearer ' + token }
     });
 
     var data = await result.json();
@@ -80,13 +82,13 @@ var getLatestAlbums = async (token, artistId) => {
     var j = 0;
     var currentAlbum = "";
 
-    for(var i = 0; i < 3; i++){
-        while (data.items[i+j].name == currentAlbum) {
+    for (var i = 0; i < 3; i++) {
+        while (data.items[i + j].name == currentAlbum) {
             j++;
         }
-        albumData.name.push(data.items[i+j].name);
-        albumData.img.push(data.items[i+j].images[1].url);
-        currentAlbum = data.items[i+j].name;
+        albumData.name.push(data.items[i + j].name);
+        albumData.img.push(data.items[i + j].images[1].url);
+        currentAlbum = data.items[i + j].name;
     }
     return albumData;
 }
@@ -94,13 +96,13 @@ var getLatestAlbums = async (token, artistId) => {
 var getArtistPhoto = async (token, artistId) => {
     apiURL = `https://api.spotify.com/v1/artists/` + artistId;
     var result = await fetch(apiURL, {
-    method: 'GET',
-    headers: { 'Authorization' : 'Bearer ' + token}
+        method: 'GET',
+        headers: { 'Authorization': 'Bearer ' + token }
     });
 
     var data = await result.json();
-    
-    return [data.name ,data.images[0].url];
+
+    return [data.name, data.images[0].url];
 }
 
 var getArtistData = async (artist) => {
@@ -129,7 +131,7 @@ var addSongList = async (artistData) => {
     }
 }
 
-var loadArtistInfo = async(artistData) => {
+var loadArtistInfo = async (artistData) => {
     var artistInformation = await artistData;
     var artistHeaderEl = document.createElement('h1');
     artistHeaderEl.textContent = artistInformation.name;
@@ -139,9 +141,9 @@ var loadArtistInfo = async(artistData) => {
     artistPictureEl.append(artistImgEl);
 }
 
-var loadAlbumInfo = async(artistData) => {
+var loadAlbumInfo = async (artistData) => {
     var artistInformation = await artistData;
-    
+
     for (let i = 0; i < 3; i++) {
         var albumTitleEl = document.createElement('div');
         albumTitleEl.textContent = artistInformation.albums.name[i]
@@ -151,16 +153,16 @@ var loadAlbumInfo = async(artistData) => {
     }
 }
 
-var formSubmitHandler = function(event) {
+var formSubmitHandler = function (event) {
     event.preventDefault();
-    
+
     var artistName = nameInputEl.value.trim();
 
     if (artistName) {
         getArtistData(artistName);
         nameInputEl.value = "";
     }
-  };
+};
 
 token = getToken();
 var artistData = getArtistData(artistName);
