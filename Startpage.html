@@ -38,10 +38,14 @@
 
    
 <!--Search Bar-->
- <div class="search-bar">
-    <input type="text" placeholder="Artist/Song/Album">
-    <button type="Search">Search</button>
- </div>
+<div class="search-bar">
+    <h3 class="">Search By User</h3>
+    <form id="artist-form" class="" action="index.html" method="GET">
+      <label class="form-label" for="artist-name">Artist</label>
+      <input name="artist-name" id="artist-name" type="text" autofocus="true" class="" />
+      <button type="submit" class="btn">Find Artist Info</button>
+    </form>
+  </div>
  
  <!--Detailed Section-->
  <section id="User-Story" class="info">
@@ -72,5 +76,11 @@
     </p>
  </section>
  <!-- End detailed Section-->
+<!--Search bar-->
+ <!-- <div class="search-bar">
+    <button type="Search">Search</button>
+    <input type="text" placeholder="Artist/Song/Album">
+ </div> -->
+  <script src="./assets/js/Startpage.js"></script>
 </body>
 </html>
