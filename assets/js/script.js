@@ -1,3 +1,4 @@
+<<<<<<< .merge_file_a09520
 <<<<<<< HEAD
 
 var newsAPI = 'https://api.nytimes.com/svc/search/v2/articlesearch.json?q=';
@@ -40,6 +41,11 @@ fetch(url)
 var artistInfo = {};
 
 =======
+=======
+const clientId = 'ba4975819dba4a6798c1b583e77851b2';
+const clientSecret = '94323600794449529bcd84b8caf8d7e5';
+
+>>>>>>> .merge_file_a15800
 var songListEl = document.querySelector("#songs")
 var artistNameEl = document.querySelector("#artist-name")
 var artistPictureEl = document.querySelector("#artist-picture")
