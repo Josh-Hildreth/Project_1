@@ -1,6 +1,3 @@
-<<<<<<< .merge_file_a09520
-<<<<<<< HEAD
-
 var newsAPI = 'https://api.nytimes.com/svc/search/v2/articlesearch.json?q=';
 //var inputTextValue = document.getElementById('searchTxt').value;
 var apiKey = 'api-key=ryZ2eejmGUV3AR1sdXgrtj1B6Hxfjs7q';
@@ -40,12 +37,9 @@ fetch(url)
 // beccas stuff below
 var artistInfo = {};
 
-=======
-=======
 const clientId = 'ba4975819dba4a6798c1b583e77851b2';
 const clientSecret = '94323600794449529bcd84b8caf8d7e5';
 
->>>>>>> .merge_file_a15800
 var songListEl = document.querySelector("#songs")
 var artistNameEl = document.querySelector("#artist-name")
 var artistPictureEl = document.querySelector("#artist-picture")
@@ -55,7 +49,6 @@ var queryString = document.location.search;
 var artistName = queryString.split("=")[1].trim();
 
 // private methods
->>>>>>> main
 var getToken = async () => {
 
     var result = await fetch('https://accounts.spotify.com/api/token', {
@@ -82,18 +75,6 @@ var getArtistId = async (token, artist) => {
         var artistId = data.artists.items[0].id;
         return artistId;
 }
-
-// var getOfficialName = async (token, artistId) => {
-//     apiURL = `https://api.spotify.com/v1/artists/` + artistId;
-//     var result = await fetch(apiURL, {
-//     method: 'GET',
-//     headers: { 'Authorization' : 'Bearer ' + token}
-//     });
-
-//     var data = await result.json();
-
-//     return data.name;
-// }
 
 var getTopSongs = async (token, artistId) => {
     apiURL = 'https://api.spotify.com/v1/artists/'+artistId+'/top-tracks?country=US';
@@ -152,15 +133,6 @@ var getArtistPhoto = async (token, artistId) => {
     return [data.name ,data.images[0].url];
 }
 
-<<<<<<< HEAD
-getArtistData('lord huron')
-
-
-// when the search bar is clicked you'll be redirected to main page
-document.getElementById("searchBtn").onclick = function () {
-    window.location.href = "./index.html"
-}
-=======
 var getArtistData = async (artist) => {
     var artistInfo = {};
     var myToken = await token;
@@ -191,7 +163,9 @@ var loadArtistInfo = async(artistData) => {
     var artistInformation = await artistData;
     var artistHeaderEl = document.createElement('h1');
     artistHeaderEl.textContent = artistInformation.name;
+    artistHeaderEl.classList.add("artist-name");
     var artistImgEl = document.createElement('img');
+    artistImgEl.classList.add("band-photo");
     artistImgEl.setAttribute("src", artistInformation.photo);
     artistNameEl.append(artistHeaderEl);
     artistPictureEl.append(artistImgEl);
@@ -202,8 +176,11 @@ var loadAlbumInfo = async(artistData) => {
     
     for (let i = 0; i < 3; i++) {
         var albumTitleEl = document.createElement('div');
-        albumTitleEl.textContent = artistInformation.albums.name[i]
+        albumTitleEl.textContent = artistInformation.albums.name[i];
+        albumTitleEl.classList.add("album-title");
         var albumPhotoEl = document.createElement('img');
+        albumPhotoEl.classList.add("album-photo");
+
         albumPhotoEl.setAttribute("src", artistInformation.albums.img[i]);
         artistAlbumsEl.append(albumTitleEl, albumPhotoEl);
     }
@@ -227,4 +204,3 @@ var artistData = getArtistData(artistName);
 addSongList(artistData);
 loadArtistInfo(artistData);
 loadAlbumInfo(artistData);
->>>>>>> main
