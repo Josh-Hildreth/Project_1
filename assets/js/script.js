@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 
 var newsAPI = 'https://api.nytimes.com/svc/search/v2/articlesearch.json?q=';
 //var inputTextValue = document.getElementById('searchTxt').value;
@@ -39,7 +38,6 @@ fetch(url)
 // beccas stuff below
 var artistInfo = {};
 
-=======
 var songListEl = document.querySelector("#songs")
 var artistNameEl = document.querySelector("#artist-name")
 var artistPictureEl = document.querySelector("#artist-picture")
@@ -49,7 +47,6 @@ var queryString = document.location.search;
 var artistName = queryString.split("=")[1].trim();
 
 // private methods
->>>>>>> main
 var getToken = async () => {
 
     var result = await fetch('https://accounts.spotify.com/api/token', {
@@ -146,15 +143,6 @@ var getArtistPhoto = async (token, artistId) => {
     return [data.name ,data.images[0].url];
 }
 
-<<<<<<< HEAD
-getArtistData('lord huron')
-
-
-// when the search bar is clicked you'll be redirected to main page
-document.getElementById("searchBtn").onclick = function () {
-    window.location.href = "./index.html"
-}
-=======
 var getArtistData = async (artist) => {
     var artistInfo = {};
     var myToken = await token;
@@ -221,4 +209,3 @@ var artistData = getArtistData(artistName);
 addSongList(artistData);
 loadArtistInfo(artistData);
 loadAlbumInfo(artistData);
->>>>>>> main
