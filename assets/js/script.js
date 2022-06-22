@@ -1,8 +1,10 @@
+var queryString = document.location.search;
+var artistName = queryString.split("=")[1].trim();
+
 var newsAPI = 'https://api.nytimes.com/svc/search/v2/articlesearch.json?q=';
-//var inputTextValue = document.getElementById('searchTxt').value;
 var apiKey = 'api-key=ryZ2eejmGUV3AR1sdXgrtj1B6Hxfjs7q';
 
-var url = newsAPI + 'joe' + '&' + apiKey;
+var url = newsAPI + artistName + '&' + apiKey;
 
 // fetches apiURL and catches an error if one occurs
 fetch(url)
@@ -13,14 +15,13 @@ fetch(url)
         return response.json();
     })
     .then(data => {
-        console.log(data.response.docs);
-        const html = data.response.docs
+        const slicedNewsData = data.response.docs.slice(0, 3);
+        const html = slicedNewsData
         .map(articles => {
             return `
             <div class='articles'>
-                <p>Article: ${articles.abstract}</p>
                 <p>Headline: ${articles.headline.main}</p>
-                <p>URL - ${articles.web_url}</p>
+                <p>URL - <a href="${articles.web_url}" target="_blank">Click here for article</a></p>
     
             </div>
             `;
@@ -35,7 +36,6 @@ fetch(url)
     });
 
 // beccas stuff below
-var artistInfo = {};
 
 const clientId = 'ba4975819dba4a6798c1b583e77851b2';
 const clientSecret = '94323600794449529bcd84b8caf8d7e5';
@@ -44,9 +44,6 @@ var songListEl = document.querySelector("#songs")
 var artistNameEl = document.querySelector("#artist-name")
 var artistPictureEl = document.querySelector("#artist-picture")
 var artistAlbumsEl = document.querySelector("#albums")
-
-var queryString = document.location.search;
-var artistName = queryString.split("=")[1].trim();
 
 // private methods
 var getToken = async () => {
@@ -100,7 +97,6 @@ var getLatestAlbums = async (token, artistId) => {
     });
 
     var data = await result.json();
-    console.log(data);
     var albumData = {
         name: [],
         img: []
