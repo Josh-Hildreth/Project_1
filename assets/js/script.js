@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 var newsAPI = 'https://api.nytimes.com/svc/search/v2/articlesearch.json?q=';
 //var inputTextValue = document.getElementById('searchTxt').value;
@@ -38,6 +39,17 @@ fetch(url)
 // beccas stuff below
 var artistInfo = {};
 
+=======
+var songListEl = document.querySelector("#songs")
+var artistNameEl = document.querySelector("#artist-name")
+var artistPictureEl = document.querySelector("#artist-picture")
+var artistAlbumsEl = document.querySelector("#albums")
+
+var queryString = document.location.search;
+var artistName = queryString.split("=")[1].trim();
+
+// private methods
+>>>>>>> main
 var getToken = async () => {
 
     var result = await fetch('https://accounts.spotify.com/api/token', {
@@ -53,11 +65,11 @@ var getToken = async () => {
     return data.access_token;
 }
 
-var getArtistId = async (artist) => {
-        artist = artist.replace(" ","+");
+var getArtistId = async (token, artist) => {
         apiURL = `https://api.spotify.com/v1/search?q=` + artist + `&type=artist`;
         var result = await fetch(apiURL, {
-        method: 'GET'
+        method: 'GET',
+        headers: { 'Authorization' : 'Bearer ' + token}
         });
 
         var data = await result.json();
@@ -65,15 +77,27 @@ var getArtistId = async (artist) => {
         return artistId;
 }
 
-var getTopSongs = async (artistId) => {
+// var getOfficialName = async (token, artistId) => {
+//     apiURL = `https://api.spotify.com/v1/artists/` + artistId;
+//     var result = await fetch(apiURL, {
+//     method: 'GET',
+//     headers: { 'Authorization' : 'Bearer ' + token}
+//     });
 
-    var result = await fetch('https://api.spotify.com/v1/artists/'+artistId+'/top-tracks?country=US', {
-        method: 'GET'
+//     var data = await result.json();
+
+//     return data.name;
+// }
+
+var getTopSongs = async (token, artistId) => {
+    apiURL = 'https://api.spotify.com/v1/artists/'+artistId+'/top-tracks?country=US';
+    var result = await fetch(apiURL, {
+        method: 'GET',
+        headers: { 'Authorization' : 'Bearer ' + token}
     });
 
     var data = await result.json();
     var topTracksInfo = data.tracks;
-    console.log(topTracksInfo);
     var songTitles = [];
     for(var i = 0; i < topTracksInfo.length; i++){
         songTitles.push(topTracksInfo[i].name);
@@ -81,36 +105,48 @@ var getTopSongs = async (artistId) => {
     return songTitles;
 }
 
-var getLatestAlbums = async (artistId) => {
-    console.log(artistId);
-    apiURL = `	https://api.spotify.com/v1/artists/` + artistId + `/albums`;
+var getLatestAlbums = async (token, artistId) => {
+    apiURL = `https://api.spotify.com/v1/artists/` + artistId + `/albums`;
     var result = await fetch(apiURL, {
-    method: 'GET'
+    method: 'GET',
+    headers: { 'Authorization' : 'Bearer ' + token}
     });
 
     var data = await result.json();
+    console.log(data);
     var albumData = {
         name: [],
         img: []
     };
 
+
+    var j = 0;
+    var currentAlbum = "";
+
     for(var i = 0; i < 3; i++){
-        albumData.name.push(data.items[i].name);
-        albumData.img.push(data.items[i].images[1].url);
+        while (data.items[i+j].name == currentAlbum) {
+            j++;
+        }
+        albumData.name.push(data.items[i+j].name);
+        albumData.img.push(data.items[i+j].images[1].url);
+        currentAlbum = data.items[i+j].name;
     }
     return albumData;
 }
 
-var getArtistData = async (artist) => {
-    artistInfo = {};
-    var artistId = await getArtistId(artist);
-    var songList = await getTopSongs(artistId);
-    var albums = await getLatestAlbums(artistId);
-    artistInfo.songList = songList;
-    artistInfo.albums = albums;
-    console.log(artistInfo);
+var getArtistPhoto = async (token, artistId) => {
+    apiURL = `https://api.spotify.com/v1/artists/` + artistId;
+    var result = await fetch(apiURL, {
+    method: 'GET',
+    headers: { 'Authorization' : 'Bearer ' + token}
+    });
+
+    var data = await result.json();
+    
+    return [data.name ,data.images[0].url];
 }
 
+<<<<<<< HEAD
 getArtistData('lord huron')
 
 
@@ -118,3 +154,71 @@ getArtistData('lord huron')
 document.getElementById("searchBtn").onclick = function () {
     window.location.href = "./index.html"
 }
+=======
+var getArtistData = async (artist) => {
+    var artistInfo = {};
+    var myToken = await token;
+    var artistId = await getArtistId(myToken, artist);
+    var songList = await getTopSongs(myToken, artistId);
+    var albums = await getLatestAlbums(myToken, artistId);
+    var nameAndPhoto = await getArtistPhoto(myToken, artistId);
+    artistInfo.songList = songList;
+    artistInfo.albums = albums;
+    artistInfo.photo = nameAndPhoto[1];
+    artistInfo.name = nameAndPhoto[0];
+    return artistInfo;
+}
+
+var addSongList = async (artistData) => {
+    var artistInformation = await artistData;
+    for (let i = 0; i < 10; i++) {
+        var songContainerEl = document.createElement('div');
+        songContainerEl.classList.add("song-title");
+        var songTitleEl = document.createElement("p");
+        songTitleEl.textContent = artistInformation.songList[i];
+        songContainerEl.append(songTitleEl);
+        songListEl.append(songContainerEl);
+    }
+}
+
+var loadArtistInfo = async(artistData) => {
+    var artistInformation = await artistData;
+    var artistHeaderEl = document.createElement('h1');
+    artistHeaderEl.textContent = artistInformation.name;
+    var artistImgEl = document.createElement('img');
+    artistImgEl.setAttribute("src", artistInformation.photo);
+    artistNameEl.append(artistHeaderEl);
+    artistPictureEl.append(artistImgEl);
+}
+
+var loadAlbumInfo = async(artistData) => {
+    var artistInformation = await artistData;
+    
+    for (let i = 0; i < 3; i++) {
+        var albumTitleEl = document.createElement('div');
+        albumTitleEl.textContent = artistInformation.albums.name[i]
+        var albumPhotoEl = document.createElement('img');
+        albumPhotoEl.setAttribute("src", artistInformation.albums.img[i]);
+        artistAlbumsEl.append(albumTitleEl, albumPhotoEl);
+    }
+}
+
+var formSubmitHandler = function(event) {
+    event.preventDefault();
+    
+    var artistName = nameInputEl.value.trim();
+
+    if (artistName) {
+        getArtistData(artistName);
+        nameInputEl.value = "";
+    }
+  };
+
+token = getToken();
+var artistData = getArtistData(artistName);
+
+
+addSongList(artistData);
+loadArtistInfo(artistData);
+loadAlbumInfo(artistData);
+>>>>>>> main
