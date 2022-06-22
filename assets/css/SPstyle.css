@@ -34,12 +34,18 @@ header {
     background-image: url("../images/background.jpg");
   }
 
+  .hero-image {
+    display: flex;
+    justify-content: center;
+    height: 20px;
+    width: auto;
+  }
+
   /* Beginning of Search Bar */
   .search-bar {
+    display: flex;
+    justify-content: center;
     overflow: hidden;
-    margin-top: 375px;
-    margin-left: 750px;
-    
   }
 
   .search-bar a {
@@ -59,6 +65,38 @@ header {
     margin-top: 8px;
     margin-right: 16px;
     font-size: 17px;
+  }
+
+  .info {
+    text-align: center;
+    background-color: black;
+    border: 3px #1DB954;
+    opacity: .75;
+    margin: 10%;
+  }
+
+  .info h1 {
+    text-align: center;
+    color: #1DB954;
+    font-weight: bold;
+    font-size: 45px;
+    border-bottom: 3px solid #1DB954;
+    padding: 0 100px 20px 100px;
+    display: inline-block; 
+  }
+
+  .info p {
+    line-height: 1.6;
+    width: 80%;
+    font-size: 25px;
+    color: #1DB954;
+    text-align: center;
+    margin: 0 auto;
+    font-style: bold;
+  }
+
+  .engineers {
+
   }
 
   

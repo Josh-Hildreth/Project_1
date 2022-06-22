@@ -1,3 +1,43 @@
+
+var newsAPI = 'https://api.nytimes.com/svc/search/v2/articlesearch.json?q=';
+//var inputTextValue = document.getElementById('searchTxt').value;
+var apiKey = 'api-key=ryZ2eejmGUV3AR1sdXgrtj1B6Hxfjs7q';
+
+var url = newsAPI + 'joe' + '&' + apiKey;
+
+// fetches apiURL and catches an error if one occurs
+fetch(url)
+    .then(response => {
+        if (!response.ok) {
+            throw Error("ERROR");
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log(data.response.docs);
+        const html = data.response.docs
+        .map(articles => {
+            return `
+            <div class='articles'>
+                <p>Article: ${articles.abstract}</p>
+                <p>Headline: ${articles.headline.main}</p>
+                <p>URL - ${articles.web_url}</p>
+    
+            </div>
+            `;
+        })
+            .join('');
+        console.log(html);
+        document.querySelector('#news')
+        .insertAdjacentHTML('afterbegin', html);
+    })
+    .catch(error => {
+        console.log(error);
+    });
+
+// beccas stuff below
+var artistInfo = {};
+
 var songListEl = document.querySelector("#songs")
 var artistNameEl = document.querySelector("#artist-name")
 var artistPictureEl = document.querySelector("#artist-picture")
