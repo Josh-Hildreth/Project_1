@@ -1,12 +1,12 @@
 var artistInfo = {};
-   
+
 var getToken = async () => {
 
     var result = await fetch('https://accounts.spotify.com/api/token', {
         method: 'POST',
         headers: {
-            'Content-Type' : 'application/x-www-form-urlencoded', 
-            'Authorization' : 'Basic ' + btoa(clientId + ':' + clientSecret)
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': 'Basic ' + btoa(clientId + ':' + clientSecret)
         },
         body: 'grant_type=client_credentials'
     });
@@ -16,20 +16,20 @@ var getToken = async () => {
 }
 
 var getArtistId = async (artist) => {
-        artist = artist.replace(" ","+");
-        apiURL = `https://api.spotify.com/v1/search?q=` + artist + `&type=artist`;
-        var result = await fetch(apiURL, {
+    artist = artist.replace(" ", "+");
+    apiURL = `https://api.spotify.com/v1/search?q=` + artist + `&type=artist`;
+    var result = await fetch(apiURL, {
         method: 'GET'
-        });
+    });
 
-        var data = await result.json();
-        var artistId = data.artists.items[0].id;
-        return artistId;
+    var data = await result.json();
+    var artistId = data.artists.items[0].id;
+    return artistId;
 }
 
 var getTopSongs = async (artistId) => {
 
-    var result = await fetch('https://api.spotify.com/v1/artists/'+artistId+'/top-tracks?country=US', {
+    var result = await fetch('https://api.spotify.com/v1/artists/' + artistId + '/top-tracks?country=US', {
         method: 'GET'
     });
 
@@ -37,7 +37,7 @@ var getTopSongs = async (artistId) => {
     var topTracksInfo = data.tracks;
     console.log(topTracksInfo);
     var songTitles = [];
-    for(var i = 0; i < topTracksInfo.length; i++){
+    for (var i = 0; i < topTracksInfo.length; i++) {
         songTitles.push(topTracksInfo[i].name);
     }
     return songTitles;
@@ -47,7 +47,7 @@ var getLatestAlbums = async (artistId) => {
     console.log(artistId);
     apiURL = `	https://api.spotify.com/v1/artists/` + artistId + `/albums`;
     var result = await fetch(apiURL, {
-    method: 'GET'
+        method: 'GET'
     });
 
     var data = await result.json();
@@ -56,7 +56,7 @@ var getLatestAlbums = async (artistId) => {
         img: []
     };
 
-    for(var i = 0; i < 3; i++){
+    for (var i = 0; i < 3; i++) {
         albumData.name.push(data.items[i].name);
         albumData.img.push(data.items[i].images[1].url);
     }
