@@ -77,18 +77,6 @@ var getArtistId = async (token, artist) => {
         return artistId;
 }
 
-// var getOfficialName = async (token, artistId) => {
-//     apiURL = `https://api.spotify.com/v1/artists/` + artistId;
-//     var result = await fetch(apiURL, {
-//     method: 'GET',
-//     headers: { 'Authorization' : 'Bearer ' + token}
-//     });
-
-//     var data = await result.json();
-
-//     return data.name;
-// }
-
 var getTopSongs = async (token, artistId) => {
     apiURL = 'https://api.spotify.com/v1/artists/'+artistId+'/top-tracks?country=US';
     var result = await fetch(apiURL, {
@@ -176,7 +164,9 @@ var loadArtistInfo = async(artistData) => {
     var artistInformation = await artistData;
     var artistHeaderEl = document.createElement('h1');
     artistHeaderEl.textContent = artistInformation.name;
+    artistHeaderEl.classList.add("artist-name");
     var artistImgEl = document.createElement('img');
+    artistImgEl.classList.add("band-photo");
     artistImgEl.setAttribute("src", artistInformation.photo);
     artistNameEl.append(artistHeaderEl);
     artistPictureEl.append(artistImgEl);
@@ -187,8 +177,11 @@ var loadAlbumInfo = async(artistData) => {
     
     for (let i = 0; i < 3; i++) {
         var albumTitleEl = document.createElement('div');
-        albumTitleEl.textContent = artistInformation.albums.name[i]
+        albumTitleEl.textContent = artistInformation.albums.name[i];
+        albumTitleEl.classList.add("album-title");
         var albumPhotoEl = document.createElement('img');
+        albumPhotoEl.classList.add("album-photo");
+
         albumPhotoEl.setAttribute("src", artistInformation.albums.img[i]);
         artistAlbumsEl.append(albumTitleEl, albumPhotoEl);
     }
