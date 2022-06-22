@@ -1,9 +1,52 @@
 const clientId = 'ba4975819dba4a6798c1b583e77851b2';
 const clientSecret = '94323600794449529bcd84b8caf8d7e5';
+
+var newsAPI = 'https://api.nytimes.com/svc/search/v2/articlesearch.json?q=';
+//var inputTextValue = document.getElementById('searchTxt').value;
+var apiKey = 'api-key=ryZ2eejmGUV3AR1sdXgrtj1B6Hxfjs7q';
+
+var url = newsAPI + 'joe' + '&' + apiKey;
+
+// fetches apiURL and catches an error if one occurs
+fetch(url)
+    .then(response => {
+        if (!response.ok) {
+            throw Error("ERROR");
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log(data.response.docs);
+        const html = data.response.docs
+        .map(articles => {
+            return `
+            <div class='articles'>
+                <p>Article: ${articles.abstract}</p>
+                <p>Headline: ${articles.headline.main}</p>
+                <p>URL - ${articles.web_url}</p>
+    
+            </div>
+            `;
+        })
+            .join('');
+        console.log(html);
+        document.querySelector('#news')
+        .insertAdjacentHTML('afterbegin', html);
+    })
+    .catch(error => {
+        console.log(error);
+    });
+
+// beccas stuff below
+var artistInfo = {};
+
 var songListEl = document.querySelector("#songs")
 var artistNameEl = document.querySelector("#artist-name")
 var artistPictureEl = document.querySelector("#artist-picture")
 var artistAlbumsEl = document.querySelector("#albums")
+
+const clientId = 'ba4975819dba4a6798c1b583e77851b2';
+const clientSecret = '94323600794449529bcd84b8caf8d7e5';
 
 var queryString = document.location.search;
 var artistName = queryString.split("=")[1].trim();
@@ -35,18 +78,6 @@ var getArtistId = async (token, artist) => {
     var artistId = data.artists.items[0].id;
     return artistId;
 }
-
-// var getOfficialName = async (token, artistId) => {
-//     apiURL = `https://api.spotify.com/v1/artists/` + artistId;
-//     var result = await fetch(apiURL, {
-//     method: 'GET',
-//     headers: { 'Authorization' : 'Bearer ' + token}
-//     });
-
-//     var data = await result.json();
-
-//     return data.name;
-// }
 
 var getTopSongs = async (token, artistId) => {
     apiURL = 'https://api.spotify.com/v1/artists/' + artistId + '/top-tracks?country=US';
@@ -135,7 +166,9 @@ var loadArtistInfo = async (artistData) => {
     var artistInformation = await artistData;
     var artistHeaderEl = document.createElement('h1');
     artistHeaderEl.textContent = artistInformation.name;
+    artistHeaderEl.classList.add("artist-name");
     var artistImgEl = document.createElement('img');
+    artistImgEl.classList.add("band-photo");
     artistImgEl.setAttribute("src", artistInformation.photo);
     artistNameEl.append(artistHeaderEl);
     artistPictureEl.append(artistImgEl);
@@ -146,8 +179,11 @@ var loadAlbumInfo = async (artistData) => {
 
     for (let i = 0; i < 3; i++) {
         var albumTitleEl = document.createElement('div');
-        albumTitleEl.textContent = artistInformation.albums.name[i]
+        albumTitleEl.textContent = artistInformation.albums.name[i];
+        albumTitleEl.classList.add("album-title");
         var albumPhotoEl = document.createElement('img');
+        albumPhotoEl.classList.add("album-photo");
+
         albumPhotoEl.setAttribute("src", artistInformation.albums.img[i]);
         artistAlbumsEl.append(albumTitleEl, albumPhotoEl);
     }
