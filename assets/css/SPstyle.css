@@ -9,6 +9,7 @@ header {
     display: flex;
     justify-content: space-between;
     opacity: .65;
+    margin-bottom: 150px;
   }
 
   header nav ul {
@@ -37,8 +38,9 @@ header {
   .hero-image {
     display: flex;
     justify-content: center;
-    height: 20px;
+    height: 200px;
     width: auto;
+    margin-bottom: 20px;
   }
 
   /* Beginning of Search Bar */
@@ -96,7 +98,124 @@ header {
   }
 
   .engineers {
-
+    text-align: center;
+    background-color: black;
+    border: 3px #1DB954;
+    opacity: .75;
+    margin: 10%;
   }
 
+  .engineers h1 {
+    text-align: center;
+    color: #1DB954;
+    font-weight: bold;
+    font-size: 45px;
+    border-bottom: 3px solid #1DB954;
+    padding: 0 100px 20px 100px;
+    display: inline-block; 
+  }
+
+  .engineers h2 {
+    font-size: 30px;
+    font-style: italic;
+    font-style: bold;
+  }
+
+  .engineer {
+    width: 900px;
+    margin: 0 auto 30px auto;
+    background-color: black;
+    color: #1DB954;
+    opacity: .75;
+  }
+
+  .engineer img {
+    width: 35%;
+    float: left;
+    opacity: 1.0;
+  }
+
+  .engineer-bio {
+    padding: 35px;
+    float: left;
+    background-color: black;
+    color: #1DB954;
+    opacity: .75;
+    margin: 10%;
+  }
+
+  .engineer-bio p {
+    font-size: 25px;
+    line-height: 1.6;
+  }
+
+  .text-left {
+    text-align: left;
+  }
+
+  .text-right {
+    text-align: right;
+  }
   
+  @media screen and (max-width: 980px) {
+    header img {
+      width: 20%;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    
+  }
+
+  @media screen and (max-width: 400px) {
+    .hero-image {
+      height: 5rem;
+    }
+
+    .engineers {
+      margin: 5%;
+    }
+  
+    .engineers h1 {
+      font-weight: bold;
+      font-size: 3rem;
+      padding: 5%;
+    }
+  
+    .engineers h2 {
+      font-size: 2rem;
+    }
+
+    .engineer {
+      width: 90%;
+      margin: 0 auto 10px auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+  
+    .engineer img {
+      width: 35%;
+      float:none;
+    }
+  
+    .engineer-bio {
+      padding: 10px;
+      float: none;
+      margin: 10%;
+    }
+  
+    .engineer-bio p {
+      font-size: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .text-left {
+      text-align: center;
+    }
+  
+    .text-right {
+      text-align: center;
+    }
+  }
