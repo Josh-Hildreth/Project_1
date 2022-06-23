@@ -9,12 +9,23 @@ body {
     background-color: black;
     color: white;
 }
+.nav-bar{
+    display: flex;
+    align-items: center;
+}
+.nav-img{
+    display: flex;
+    width: 100%;
+}
 
 .topnav {
+    display: flex;
     overflow: hidden;
     text-align: right;
     background-color: #04AA6D;
     color: white;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .topnav a {
@@ -33,47 +44,98 @@ body {
 
 /* Songs and artist sections */
 
-.song-container{
-    border: 1px solid gray ;
+.song-container {
     width: 55%;
     display: flex;
     margin-left: 7%;
     margin-right: 15px;
-    height: 100vh;
+    height: 100%;
+    align-items: center;
 }
 
-.artist-container{
-    border: 1px solid gray ;
+.artist-container {
     width: 35%;
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
     margin-right: 3%;
+    align-items: center;
 }
 
-.container{
+
+
+.main-container {
     display: flex;
 }
 
-.songs{
-    border:1px solid gray ;
+.songs, .albums {
     width: 40%;
-    margin-right: 5%;
     margin-left: 5%;
-}
-
-.albums{
-    border:1px solid gray ; 
-    width: 40%;
-    margin-left: 5%; 
-}
-
-.song-title{
+    align-items: center;
     display: flex;
-    background-color: white;
-    color: black;
-    
+    flex-direction: column;
 }
 
-.song-title p{
+/* .albums {
+    width: 40%;
+    margin-left: 5%;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+} */
+
+.song-title {
+    display: flex;
+    background-color: black;
+    color: #04AA6D;
+    font-size: 23px;
+}
+
+.song-title p {
     margin-left: 15px;
+}
+
+.album-photo {
+    height: 250px;
+    width: 300px;
+    padding-left: 60px;
+}
+
+.band-photo {
+    padding-top: 0px;
+    padding-left: 55px;
+}
+
+.artist-name{
+    text-align: center;
+    font-size: 60px;
+    padding-bottom: 0px;
+    line-height: 5px;
+}
+
+.latest-albums{
+    text-align: center;
+    font-size: 30px;
+}
+
+.album-title{
+    text-align: center;
+    font-size: 30px;
+}
+
+.articles{
+    color: #04AA6D;
+    padding-top: 60px;
+}
+
+@media only screen and (max-width: 1400px) {
+    .main-container{
+        flex-direction: column-reverse;
+        align-items: center;
+    }
+}
+
+@media only screen and (max-width: 850px) {
+    .song-container{
+        flex-direction: column;
+    }
 }

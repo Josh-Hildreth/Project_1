@@ -140,6 +140,7 @@ var getArtistData = async (artist) => {
     artistInfo.albums = albums;
     artistInfo.photo = nameAndPhoto[1];
     artistInfo.name = nameAndPhoto[0];
+    localStorage.setItem("artistData", JSON.stringify(artistInfo));
     return artistInfo;
 }
 
@@ -182,20 +183,8 @@ var loadAlbumInfo = async(artistData) => {
     }
 }
 
-var formSubmitHandler = function(event) {
-    event.preventDefault();
-    
-    var artistName = nameInputEl.value.trim();
-
-    if (artistName) {
-        getArtistData(artistName);
-        nameInputEl.value = "";
-    }
-  };
-
 token = getToken();
 var artistData = getArtistData(artistName);
-
 
 addSongList(artistData);
 loadArtistInfo(artistData);
