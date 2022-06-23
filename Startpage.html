@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-eqsection="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="./assets/css/SPstyle.css">
     <title>Start Page</title>
 </head>
@@ -32,16 +33,17 @@
         </nav>
     </header>
     <!-- End Navigation--> 
+
     <div class="hero-image">
     <img src="./assets/images/listentospotify.jpg" alt="Listen on Spotify" />
     </div>
    
-<!--Search Bar-->
-<div class="search-bar">
+ <!--Search Bar-->
+ <div class="search-bar">
     <form id="artist-form" class="" action="index.html" method="GET">
       <label class="form-label" for="artist-name"></label>
       <input name="artist-name" id="artist-name" type="text" autofocus="true" class="" />
-      <button type="submit" class="btn">Find Artist Info</button>
+      <button type="submit" class="button">Find Artist Info</button>
     </form>
   </div>
  
@@ -67,18 +69,91 @@
     </p>
  </section>
 
- <section id="About-Us" class="engineers">
+ <section id="your-engineers" class="engineers">
     <h1>About Us</h1>
-    <p>
-        example example example example example example example example example example example example example example example example example example example example example example
-    </p>
+    <article class="engineer">
+        <div class="engineer-bio text-left">
+         <img src="./assets/Images/person.jpg" alt="Rebecca Doan lookin fine as wine" />
+         <h2>Rebecca Doan</h2>
+          <p>
+            Responsibilities:
+         </p>
+         <break>
+        </break>
+        <p>
+            Github:
+        </p>
+        <break>
+        </break>
+        <p>
+            LinkedIn:
+        </p>
+        </div>
+    </article>
+
+    <article class="engineer">
+        <div class="engineer-bio text-right">
+            <h2>Jacob Lysaught</h2>
+            <p>
+                Responsibilities:
+            </p>
+            <break>
+           </break>
+           <p>
+               Github:
+           </p>
+           <break>
+           </break>
+           <p>
+               LinkedIn: 
+            </p>
+        </div>
+        <img src="./assets/Images/person2.jpg" alt="Jacob Lysaught lookin fine as wine" />
+    </article>
+
+    <article class="engineer">
+            <div class="engineer-bio text-left">
+             <img src="./assets/Images/person3.jpg" alt="Edgar Rahbani-Rodriguez lookin fine as wine" />
+             <h2>Edgar Rahbani-Rodriguez</h2>
+              <p>
+                Responsibilities:
+             </p>
+             <break>
+            </break>
+            <p>
+                Github:
+            </p>
+            <break>
+            </break>
+            <p>
+                LinkedIn:
+            </p>
+            </div>
+    </article>
+
+    <article class="engineer">
+            <div class="engineer-bio text-right">
+                <h2>Josh Hildreth</h2>
+                <p>
+                    Responsibilities:
+                </p>
+                <break>
+               </break>
+               <p>
+                   Github:
+               </p>
+               <break>
+               </break>
+               <p>
+                   LinkedIn: 
+                </p>
+            </div>
+            <img src="./assets/Images/person4.jpg" alt="Josh Hildreth lookin fine as wine" />
+    </article>
+      
  </section>
- <!-- End detailed Section-->
-<!--Search bar-->
- <!-- <div class="search-bar">
-    <button type="Search">Search</button>
-    <input type="text" placeholder="Artist/Song/Album">
- </div> -->
+
+
   <script src="./assets/js/Startpage.js"></script>
 </body>
 </html>
