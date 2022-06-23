@@ -56,11 +56,6 @@ header {
     font-size: 17px;
     color:#1DB954;
   }
-/* Search Bar hover */
-  .search-bar a:hover {
-    color: black;
-    background-color: #1DB954;
-  }
 
   .search-bar input[type=text] {
     padding: 6px;
@@ -68,6 +63,8 @@ header {
     margin-right: 16px;
     font-size: 17px;
   }
+
+  
 
   .info {
     text-align: center;
@@ -155,7 +152,7 @@ header {
 
   .text-right {
     text-align: right;
-  }
+  } 
   
   @media screen and (max-width: 980px) {
     header img {
@@ -212,10 +209,10 @@ header {
     }
 
     .text-left {
-      text-align: center;
+      text-align: right;
     }
   
     .text-right {
-      text-align: center;
+      text-align: left;
     }
   }
