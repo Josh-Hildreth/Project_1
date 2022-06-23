@@ -1,6 +1,5 @@
 const clientId = 'ba4975819dba4a6798c1b583e77851b2';
 const clientSecret = '94323600794449529bcd84b8caf8d7e5';
-
 var newsAPI = 'https://api.nytimes.com/svc/search/v2/articlesearch.json?q=';
 //var inputTextValue = document.getElementById('searchTxt').value;
 var apiKey = 'api-key=ryZ2eejmGUV3AR1sdXgrtj1B6Hxfjs7q';
@@ -20,7 +19,7 @@ fetch(url)
         const html = data.response.docs
         .map(articles => {
             return `
-            <div class='articles'>
+            <div class='art-icles'>
                 <p>Article: ${articles.abstract}</p>
                 <p>Headline: ${articles.headline.main}</p>
                 <p>URL - ${articles.web_url}</p>
@@ -45,8 +44,6 @@ var artistNameEl = document.querySelector("#artist-name")
 var artistPictureEl = document.querySelector("#artist-picture")
 var artistAlbumsEl = document.querySelector("#albums")
 
-const clientId = 'ba4975819dba4a6798c1b583e77851b2';
-const clientSecret = '94323600794449529bcd84b8caf8d7e5';
 
 var queryString = document.location.search;
 var artistName = queryString.split("=")[1].trim();
