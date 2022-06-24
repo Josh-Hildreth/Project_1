@@ -15,11 +15,11 @@ HTML, CSS, Tailwind Framework, JavaScript, Spotify API & NYT API, and Git
 # Demo!!
 
 When you load our app, you will be met with the following search bar where you can input you favorite artist!
-![Image of search bar](./assets/images/startpage.PNG)
+![Image of search bar](./assets/Images/startpage.PNG)
 
 Once you click search, the next page will load which shows the songs, albums, and photos of the artist
-![Image of artist information section](./assets/images/mianpageartists.PNG)
+![Image of artist information section](./assets/Images/mianpageartists.PNG)
 
 
 You can then scroll down and look at the three latest news sources posted about this artist, as shown below <br>
-![Image of deployed application](./assets/images/news.PNG)
+![Image of deployed application](./assets/Images/news.PNG)
