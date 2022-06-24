@@ -1,9 +1,12 @@
+// set the artist name equal to the name at the end of the url, which was received from the previous page
 var queryString = document.location.search;
 var artistName = queryString.split("=")[1].trim();
 
+// new yok times api url and api key
 var newsAPI = 'https://api.nytimes.com/svc/search/v2/articlesearch.json?q=';
 var apiKey = 'api-key=ryZ2eejmGUV3AR1sdXgrtj1B6Hxfjs7q';
 
+// url for fetching news articles about the artist that was searched
 var url = newsAPI + artistName + '&' + apiKey;
 
 // fetches apiURL and catches an error if one occurs
@@ -13,10 +16,12 @@ fetch(url)
             throw Error("ERROR");
         }
         return response.json();
-    })
+    }) 
     .then(data => {
+        // nyt returns an array of 10 news articles, and this grabs the first 3
         const slicedNewsData = data.response.docs.slice(0, 3);
         const html = slicedNewsData
+        // creating the html from the news articles
         .map(articles => {
             return `
             <div class='articles'>
@@ -27,7 +32,6 @@ fetch(url)
             `;
         })
             .join('');
-        console.log(html);
         document.querySelector('#news')
         .insertAdjacentHTML('afterbegin', html);
     })
@@ -35,17 +39,18 @@ fetch(url)
         console.log(error);
     });
 
-// beccas stuff below
-
+// variables needed to get token to use spotify api
 const clientId = 'ba4975819dba4a6798c1b583e77851b2';
 const clientSecret = '94323600794449529bcd84b8caf8d7e5';
 
+
+// grabbing DOM elements where we will populate our data
 var songListEl = document.querySelector("#songs")
 var artistNameEl = document.querySelector("#artist-name")
 var artistPictureEl = document.querySelector("#artist-picture")
 var artistAlbumsEl = document.querySelector("#albums")
 
-// private methods
+// get token from client id and secret
 var getToken = async () => {
 
     var result = await fetch('https://accounts.spotify.com/api/token', {
@@ -61,6 +66,7 @@ var getToken = async () => {
     return data.access_token;
 }
 
+// grab the spotify artist id from the artist search results
 var getArtistId = async (token, artist) => {
         apiURL = `https://api.spotify.com/v1/search?q=` + artist + `&type=artist`;
         var result = await fetch(apiURL, {
@@ -73,6 +79,7 @@ var getArtistId = async (token, artist) => {
         return artistId;
 }
 
+// grab top songs from spotify
 var getTopSongs = async (token, artistId) => {
     apiURL = 'https://api.spotify.com/v1/artists/'+artistId+'/top-tracks?country=US';
     var result = await fetch(apiURL, {
@@ -89,6 +96,7 @@ var getTopSongs = async (token, artistId) => {
     return songTitles;
 }
 
+// get a list of albums from the artist and return the first three that don't match each other
 var getLatestAlbums = async (token, artistId) => {
     apiURL = `https://api.spotify.com/v1/artists/` + artistId + `/albums`;
     var result = await fetch(apiURL, {
@@ -117,6 +125,8 @@ var getLatestAlbums = async (token, artistId) => {
     return albumData;
 }
 
+
+// get the artists main picture
 var getArtistPhoto = async (token, artistId) => {
     apiURL = `https://api.spotify.com/v1/artists/` + artistId;
     var result = await fetch(apiURL, {
@@ -129,6 +139,7 @@ var getArtistPhoto = async (token, artistId) => {
     return [data.name ,data.images[0].url];
 }
 
+// grab all the data and put it in one object
 var getArtistData = async (artist) => {
     var artistInfo = {};
     var myToken = await token;
@@ -140,10 +151,13 @@ var getArtistData = async (artist) => {
     artistInfo.albums = albums;
     artistInfo.photo = nameAndPhoto[1];
     artistInfo.name = nameAndPhoto[0];
+
+    // keep artist data in local storage
     localStorage.setItem("artistData", JSON.stringify(artistInfo));
     return artistInfo;
 }
 
+// populate webpage with top ten songs
 var addSongList = async (artistData) => {
     var artistInformation = await artistData;
     for (let i = 0; i < 10; i++) {
@@ -156,6 +170,8 @@ var addSongList = async (artistData) => {
     }
 }
 
+
+//populate webpage with artist name and photo
 var loadArtistInfo = async(artistData) => {
     var artistInformation = await artistData;
     var artistHeaderEl = document.createElement('h1');
@@ -168,9 +184,9 @@ var loadArtistInfo = async(artistData) => {
     artistPictureEl.append(artistImgEl);
 }
 
+// populate webpage with album names and  photos
 var loadAlbumInfo = async(artistData) => {
     var artistInformation = await artistData;
-    
     for (let i = 0; i < 3; i++) {
         var albumTitleEl = document.createElement('div');
         albumTitleEl.textContent = artistInformation.albums.name[i];
@@ -183,9 +199,13 @@ var loadAlbumInfo = async(artistData) => {
     }
 }
 
+// get spotify api token
 token = getToken();
+
+// gather artist data
 var artistData = getArtistData(artistName);
 
+// add all elements to the page
 addSongList(artistData);
 loadArtistInfo(artistData);
 loadAlbumInfo(artistData);
