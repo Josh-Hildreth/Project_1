@@ -155,7 +155,7 @@ header {
 
   .text-right {
     text-align: right;
-  }
+  } 
   
   @media screen and (max-width: 980px) {
     header img {
@@ -212,10 +212,10 @@ header {
     }
 
     .text-left {
-      text-align: center;
+      text-align: right;
     }
   
     .text-right {
-      text-align: center;
+      text-align: left;
     }
   }
